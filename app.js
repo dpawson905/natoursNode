@@ -1,6 +1,7 @@
-const debug = require('debug')('natours:app');
 const morgan = require('morgan');
 const express = require('express');
+const globalErrorHandler = require('./controllers/errorController');
+const AppError = require('./utils/appError');
 
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
@@ -26,11 +27,9 @@ app.use('/api/v1/users', userRouter);
 
 // Unhandled route middleware
 app.all('*', (req, res, next) => {
-  debug(`Cant find ${req.originalUrl} on this server`);
-  res.status(404).json({
-    status: 'fail',
-    message: `Cant find ${req.originalUrl} on this server`,
-  });
+  next(new AppError(`Cant find ${req.originalUrl} on this server`, 404));
 });
+
+app.use(globalErrorHandler);
 
 module.exports = app;
