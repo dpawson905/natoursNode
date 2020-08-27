@@ -133,11 +133,13 @@ tourSchema.pre('save', function (next) {
   next();
 });
 
-// tourSchema.pre('save', async function (next) {
-//   const guidesPromises = this.guides.map(async (id) => await User.findById(id));
-//   this.guides = await Promise.all(guidesPromises);
-//   next();
-// });
+tourSchema.pre(/^find/, async function (next) {
+  this.populate({
+    path: 'guides',
+    select: '-__v -passwordChangedAt -createdAt -updatedAt',
+  });
+  next();
+});
 
 // This regular expression is for using any string that contains the word find
 tourSchema.pre(/^find/, function (next) {
