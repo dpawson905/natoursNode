@@ -10,33 +10,28 @@ router.post('/login', authController.login);
 router.post('/forgot-password', authController.forgotPassword);
 router.patch('/reset-password/:token', authController.resetPassword);
 
-router.patch(
-  '/update-password',
-  authController.protect,
-  authController.updatePassword
-);
+// Protect all routes after this middleware
+router.use(authController.protect);
 
-router.get(
-  '/me',
-  authController.protect,
-  userController.getMe,
-  userController.getUser
-);
-router.patch('/update-me', authController.protect, userController.updateMe);
-router.delete('/delete-me', authController.protect, userController.deleteMe);
+router.patch('/update-password', authController.updatePassword);
+
+router.get('/me', userController.getMe, userController.getUser);
+
+router.patch('/update-me', userController.updateMe);
+router.delete('/delete-me', userController.deleteMe);
 
 router
   .route('/')
-  .get(
-    authController.protect,
-    authController.restrictTo('admin', 'lead-guide'),
-    userController.getAllUsers
-  )
-  .post(userController.createUser);
+  .get(authController.restrictTo('admin'), userController.getAllUsers)
+  .post(authController.restrictTo('admin'), userController.createUser);
 router
   .route('/:id')
-  .get(userController.getUser)
-  .patch(userController.checkForPasswordAndFail, userController.updateUser)
-  .delete(userController.deleteUser);
+  .get(authController.restrictTo('admin'), userController.getUser)
+  .patch(
+    authController.restrictTo('admin'),
+    userController.checkForPasswordAndFail,
+    userController.updateUser
+  )
+  .delete(authController.restrictTo('admin'), userController.deleteUser);
 
 module.exports = router;
