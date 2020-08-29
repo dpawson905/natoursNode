@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const Tour = require('../../models/tourModel');
 const User = require('../../models/userModel');
-const Reviews = require('../../models/reviewModel');
 const Review = require('../../models/reviewModel');
 
 dotenv.config({ path: './config.env' });
