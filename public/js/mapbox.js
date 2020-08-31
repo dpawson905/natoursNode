@@ -1,15 +1,12 @@
 /* eslint-disable */
-window.onload = function () {
-  const locations = JSON.parse(
-    document.getElementById('map').dataset.locations
-  );
+export const displayMap = locations => {
   mapboxgl.accessToken =
     'pk.eyJ1IjoiZHBhd3NvbjkwNSIsImEiOiJjam1ucXMzdnYwZmFkM3BsdWh3cTducmFnIn0.EOJQd5gfP0xCZOaAD41big';
 
   var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/dpawson905/ckehubb9b0zp719r26pn8k29w',
-    scrollZoom: false,
+    style: 'mapbox://styles/jonasschmedtmann/cjvi9q8jd04mi1cpgmg7ev3dy',
+    scrollZoom: false
     // center: [-118.113491, 34.111745],
     // zoom: 10,
     // interactive: false
@@ -17,7 +14,7 @@ window.onload = function () {
 
   const bounds = new mapboxgl.LngLatBounds();
 
-  locations.forEach((loc) => {
+  locations.forEach(loc => {
     // Create marker
     const el = document.createElement('div');
     el.className = 'marker';
@@ -25,14 +22,14 @@ window.onload = function () {
     // Add marker
     new mapboxgl.Marker({
       element: el,
-      anchor: 'bottom',
+      anchor: 'bottom'
     })
       .setLngLat(loc.coordinates)
       .addTo(map);
 
     // Add popup
     new mapboxgl.Popup({
-      offset: 30,
+      offset: 30
     })
       .setLngLat(loc.coordinates)
       .setHTML(`<p>Day ${loc.day}: ${loc.description}</p>`)
@@ -47,7 +44,7 @@ window.onload = function () {
       top: 200,
       bottom: 150,
       left: 100,
-      right: 100,
-    },
+      right: 100
+    }
   });
 };

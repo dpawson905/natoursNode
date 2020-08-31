@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -15,54 +16,59 @@ const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
+
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
 
 // 1) GLOBAL MIDDLEWARES
-// Dev logging
-if (process.env.NODE_ENV.trim() === 'development') {
+// Serving static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Set security HTTP headers
+app.use(helmet());
+
+// Development logging
+if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
-// Limit requests to /api from each IP
+
+// Limit requests from same API
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
-  message: 'Too many requests from this IP, please try again in an hour',
+  message: 'Too many requests from this IP, please try again in an hour!'
 });
 app.use('/api', limiter);
-// Security http headers
-app.use(helmet());
 
-app.use(
-  express.json({
-    limit: '10kb',
-  })
-);
+// Body parser, reading data from body into req.body
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(cookieParser());
 
 // Data sanitization against NoSQL query injection
 app.use(mongoSanitize());
 
-// Data sanitation against XSS
+// Data sanitization against XSS
 app.use(xss());
 
-// Prevent parameter polution
+// Prevent parameter pollution
 app.use(
   hpp({
     whitelist: [
       'duration',
-      'ratingsAverage',
       'ratingsQuantity',
+      'ratingsAverage',
       'maxGroupSize',
       'difficulty',
-      'price',
-    ],
+      'price'
+    ]
   })
 );
 
 // Test middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
+  console.log(req.cookies);
   next();
 });
 
