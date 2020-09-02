@@ -13,6 +13,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const bookingRouter = require('./routes/bookingRoutes');
 const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const scriptSrcUrls = [
   'https://*.mapbox.com',
   'https://*.stripe.com',
+  'https://js.stripe.com/',
   'https://api.tiles.mapbox.com/',
   'https://api.mapbox.com/',
   'https://kit.fontawesome.com/',
@@ -46,13 +48,17 @@ const connectSrcUrls = [
   'https://a.tiles.mapbox.com/',
   'https://b.tiles.mapbox.com/',
   'https://events.mapbox.com/',
+  'https://*.stripe.com/',
+  'https://js.stripe.com/',
   'ws://127.0.0.1:8080',
 ];
+const frameSrcUrls = ['https://*.stripe.com', 'https://js.stripe.com/'];
 const fontSrcUrls = ['https://fonts.gstatic.com/'];
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'", 'http://127.0.0.1:3000/*'],
+      frameSrc: ["'self'", ...frameSrcUrls],
       connectSrc: ["'self'", ...connectSrcUrls],
       scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
       styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
@@ -115,6 +121,8 @@ app.use((req, res, next) => {
 
 // 3) ROUTES
 app.use('/', viewRouter);
+
+app.use('/api/v1/bookings', bookingRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
