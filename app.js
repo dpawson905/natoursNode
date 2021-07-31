@@ -50,7 +50,7 @@ const connectSrcUrls = [
   'https://events.mapbox.com/',
   'https://*.stripe.com/',
   'https://js.stripe.com/',
-  'ws://127.0.0.1:8080',
+  'ws://*:8080',
 ];
 const frameSrcUrls = ['https://*.stripe.com', 'https://js.stripe.com/'];
 const fontSrcUrls = ['https://fonts.gstatic.com/'];
