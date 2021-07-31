@@ -1,8 +1,8 @@
 /* eslint-disable */
 import axios from 'axios';
-import { showAlert } from './alerts';
+import { showAlert } from './alerts'; 
 
-export const login = async (email, password) => {
+export async function login(email, password) {
   try {
     const res = await axios({
       method: 'POST',
@@ -22,9 +22,9 @@ export const login = async (email, password) => {
   } catch (err) {
     showAlert('error', err.response.data.message);
   }
-};
+}
 
-export const logout = async () => {
+export async function logout() {
   try {
     const res = await axios({
       method: 'GET',
@@ -35,4 +35,4 @@ export const logout = async () => {
     console.log(err.response);
     showAlert('error', 'Error logging out! Try again.');
   }
-};
+}

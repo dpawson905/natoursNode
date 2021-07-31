@@ -6603,13 +6603,6 @@ try {
 }
 
 },{}],"mapbox.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.displayMap = void 0;
-
 /* eslint-disable */
 var displayMap = function displayMap(locations) {
   mapboxgl.accessToken = 'pk.eyJ1IjoiZHBhd3NvbjkwNSIsImEiOiJjam1ucXMzdnYwZmFkM3BsdWh3cTducmFnIn0.EOJQd5gfP0xCZOaAD41big';
@@ -6647,8 +6640,6 @@ var displayMap = function displayMap(locations) {
     }
   });
 };
-
-exports.displayMap = displayMap;
 },{}],"../../node_modules/axios/lib/helpers/bind.js":[function(require,module,exports) {
 'use strict';
 
@@ -8480,7 +8471,8 @@ exports.showAlert = showAlert;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.logout = exports.login = void 0;
+exports.login = login;
+exports.logout = logout;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -8492,8 +8484,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var login = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(email, password) {
+function login(_x, _x2) {
+  return _login.apply(this, arguments);
+}
+
+function _login() {
+  _login = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(email, password) {
     var res;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -8535,16 +8531,15 @@ var login = /*#__PURE__*/function () {
       }
     }, _callee, null, [[0, 7]]);
   }));
+  return _login.apply(this, arguments);
+}
 
-  return function login(_x, _x2) {
-    return _ref.apply(this, arguments);
-  };
-}();
+function logout() {
+  return _logout.apply(this, arguments);
+}
 
-exports.login = login;
-
-var logout = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+function _logout() {
+  _logout = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
     var res;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
@@ -8576,13 +8571,8 @@ var logout = /*#__PURE__*/function () {
       }
     }, _callee2, null, [[0, 7]]);
   }));
-
-  return function logout() {
-    return _ref2.apply(this, arguments);
-  };
-}();
-
-exports.logout = logout;
+  return _logout.apply(this, arguments);
+}
 },{"axios":"../../node_modules/axios/index.js","./alerts":"alerts.js"}],"updateSettings.js":[function(require,module,exports) {
 "use strict";
 
@@ -8666,7 +8656,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-var stripe = Stripe('pk_test_51HMi5XEfvVWRSrp6FUOuZ2MxVVr1WuBwoQMxqHgJ4SQW8Jzx8JyZVJ6bQK1LifbhoNDK0Ixbu2ePrErimTKxv3tX00eChf6RUf');
+var stripe = Stripe('pk_test_ifsc043Rprx3j8Pd9lXrMI8X');
 
 var bookTour = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(tourId) {

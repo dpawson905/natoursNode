@@ -57,7 +57,7 @@ const fontSrcUrls = ['https://fonts.gstatic.com/'];
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'", 'http://127.0.0.1:3000/*'],
+      defaultSrc: ["'self'", 'http://*:3000/*'],
       frameSrc: ["'self'", ...frameSrcUrls],
       connectSrc: ["'self'", ...connectSrcUrls],
       scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
