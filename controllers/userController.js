@@ -79,7 +79,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     runValidators: true,
   });
 
-  createSendToken(updatedUser, 200, res);
+  createSendToken(updatedUser, 200, req, res);
 });
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
